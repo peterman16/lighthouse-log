@@ -1,0 +1,10 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# Only the page, its assets, the API and the photo server are meant to be reached.
+<Files "lib.php">
+  Require all denied
+</Files>
+<FilesMatch "^\.|\.(md)$">
+  Require all denied
+</FilesMatch>
