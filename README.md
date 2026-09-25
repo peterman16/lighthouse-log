@@ -33,4 +33,4 @@ Edit `lighthouses.json`. Each entry needs an `id` (lowercase, with dashes), `nam
 LIGHTHOUSE_DATA=/tmp/lighthouse-data php -S 127.0.0.1:8000
 ```
 
-Map tiles are © OpenStreetMap contributors © CARTO.
+Map tiles are © Esri and © OpenStreetMap contributors. Neither needs an API key.
