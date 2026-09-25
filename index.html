@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Washington Lighthouse Log</title>
+<meta name="description" content="Every historic lighthouse in Washington State, and the ones I've visited.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Washington Lighthouse Log</h1>
+      <p class="sub">Every historic light on the Salish Sea and the outer coast.</p>
+    </div>
+    <div class="tally" aria-live="polite">
+      <div class="num" id="count">&nbsp;</div>
+      <div class="bar"><i id="fill"></i></div>
+      <div class="legend">
+        <span><b class="on"></b>Visited</span>
+        <span><b class="off"></b>Not yet</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div id="map" class="mapbox" role="region" aria-label="Map of Washington lighthouses"></div>
+    <aside class="panel" id="panel"><p class="muted">Loading…</p></aside>
+  </div>
+
+  <section class="list" id="list"></section>
+
+  <footer>
+    <span id="who"></span>
+  </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
