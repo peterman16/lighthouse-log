@@ -31,10 +31,21 @@
   // ---- map ----
   const map = L.map("map", { scrollWheelZoom: false, zoomSnap: 0.5 }).setView([47.6, -123.2], 7);
   const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`, {
-    maxZoom: 18,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  }).addTo(map);
+  // Esri's gray canvas basemap needs no API key. If its tiles fail to load, fall back to
+  // the standard OpenStreetMap tiles so the map is never blank.
+  const esri = (name) => `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${name}/MapServer/tile/{z}/{y}/{x}`;
+  const canvas = dark ? "World_Dark_Gray" : "World_Light_Gray";
+  const base = L.tileLayer(esri(`${canvas}_Base`), { maxZoom: 16, attribution: "Tiles &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors" }).addTo(map);
+  const labels = L.tileLayer(esri(`${canvas}_Reference`), { maxZoom: 16 }).addTo(map);
+  let tileErrors = 0;
+  base.on("tileerror", () => {
+    if (++tileErrors !== 4) return;
+    map.removeLayer(base); map.removeLayer(labels);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  });
   map.on("click", () => map.scrollWheelZoom.enable());
 
   function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
